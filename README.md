@@ -1,4 +1,4 @@
-# Antigravity MERN Stack ERP System
+# MERN Stack ERP System
 
 A full-featured, secure, and responsive Enterprise Resource Planning (ERP) web application built using the MERN stack (MongoDB, Express.js, React.js, and Node.js) with TailwindCSS/Vanilla styling. This project features robust Role-Based Access Control (RBAC), database-driven pagination/search querying, analytical charts, PDF billing invoice exports, centralized validation, and test coverage.
 
