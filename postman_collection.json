@@ -1,0 +1,472 @@
+{
+  "info": {
+    "name": "Antigravity ERP API Suite",
+    "description": "Comprehensive Postman collection containing all REST API routes for the MERN ERP system, including Auth, Users (Admin only), Products, Customers, Suppliers, Sales/Purchase Orders, Goods Receipt Notes, and Invoices.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "User Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Admin\",\n  \"email\": \"admin@company.com\",\n  \"password\": \"securepassword123\",\n  \"role\": \"Admin\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/register",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "User Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@company.com\",\n  \"password\": \"securepassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/me",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Directory (Admin)",
+      "item": [
+        {
+          "name": "Get Users (Paginated & Searchable)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/users?page=1&search=John",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "users"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "search", "value": "John" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update User Role/Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Sales Executive\",\n  \"role\": \"Sales\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/users/:userId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "users", ":userId"]
+            }
+          }
+        },
+        {
+          "name": "Delete User Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/users/:userId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "users", ":userId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get Products (Paginated & Searchable)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/products?page=1&search=item",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "products"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "search", "value": "item" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Product (Inventory / Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Iron Rivet Widget\",\n  \"SKU\": \"IRW-0092\",\n  \"price\": 12.99,\n  \"stock\": 120,\n  \"reorderLevel\": 25\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/products",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "products"]
+            }
+          }
+        },
+        {
+          "name": "Update Product details",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 14.50,\n  \"stock\": 135\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/products/:productId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "products", ":productId"]
+            }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/products/:productId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "products", ":productId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Get Customers List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/customers?page=1&search=Acme",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "customers"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "search", "value": "Acme" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Customer Record",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Acme Industrial Corp\",\n  \"contact\": \"+1-800-555-0199\",\n  \"address\": \"400 Industrial Way, Suite A, Detroit, MI\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/customers",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "customers"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sales Orders",
+      "item": [
+        {
+          "name": "Get Sales Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/sales-orders?page=1&search=Acme",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "sales-orders"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "search", "value": "Acme" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Sales Order (Sales / Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": \"60c72b2f9b1d8b2bad034a2e\",\n  \"products\": [\n    {\n      \"product\": \"60c72b2f9b1d8b2bad034a1a\",\n      \"quantity\": 5\n    }\n  ],\n  \"status\": \"Pending\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/sales-orders",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "sales-orders"]
+            }
+          }
+        },
+        {
+          "name": "Fulfill Sales Order (Update Status)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Completed\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/sales-orders/:orderId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "sales-orders", ":orderId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Goods Receipt Notes (GRN)",
+      "item": [
+        {
+          "name": "Get GRNs Registry",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/grn",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "grn"]
+            }
+          }
+        },
+        {
+          "name": "Create GRN (Receive PO items & Increment Inventory)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"purchaseOrder\": \"60c72b2f9b1d8b2bad034c5f\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/grn",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "grn"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "item": [
+        {
+          "name": "Get All Invoices",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/invoices",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "invoices"]
+            }
+          }
+        },
+        {
+          "name": "Get Invoice By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/invoices/:invoiceId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "invoices", ":invoiceId"]
+            }
+          }
+        },
+        {
+          "name": "Mark Invoice Paid",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Paid\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/invoices/:invoiceId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "invoices", ":invoiceId"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
